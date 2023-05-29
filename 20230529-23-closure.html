@@ -10,7 +10,7 @@
 
 <body>
     <script>
-        const f = (function () {
+        const f = function () {
             let n = 3;
             return function (a) {
                 n--;
@@ -19,14 +19,21 @@
                 } else {
                     return null;
                 }
-            }
-
-        })();
-        console.log(f(6));
-        console.log(f(5));
-        console.log(f(4));
-        console.log(f(3));
-        console.log(f(2));
+            };
+        };
+        /*
+        console.log(f()(6));
+        console.log(f()(5));
+        console.log(f()(4));
+        console.log(f()(3));
+        console.log(f()(2));
+        */
+        const f2 = f();
+        console.log(f2(6));
+        console.log(f2(5));
+        console.log(f2(4));
+        console.log(f2(3));
+        console.log(f2(2));
     </script>
 </body>
 

@@ -11,24 +11,28 @@
 <body>
     <script>
         const p1 = {
-            name: {
-                first: "john",
-                last: "wick",
-            },
-            age: 25,
-            gender: "male",
+            name: "john",
+        };
+        const p2 = {
+            name: "bill",
+        };
+        const p3 = {
+            name: "ken",
         };
 
-        // 淺層拷貝
-        const p2 = { ...p1 };
-        // 傳統的深層複製
-        const p3 = JSON.parse(JSON.stringify(p1));
+        p1.next = p2;
+        p2.next = p3;
+        p3.next = p1;
+        let q1;
+        try {
+            q1 = JSON.stringify(p1);
+        } catch (ex) {
+            console.log(ex)
+        }
 
-        p2.name.last = "doe";
+        // 比較好的深層複製的方式
+        q1 = structuredClone(p1);
 
-        console.log(p1);
-        console.log(p2);
-        console.log(p3);
     </script>
 </body>
 
