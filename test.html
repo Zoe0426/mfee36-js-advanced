@@ -1,0 +1,83 @@
+//篩選的
+        const sort = document.querySelector("#sort");
+        sort.addEventListener("click", (e) => {
+            // console.log(e.target);
+            const target = e.target.value;
+            console.log(target);
+            let sortfunc = () => { };
+            console.log(target === "price_asc");
+            switch (target) {
+                case "price_asc":
+                    // console.log('price_asc');
+                    sortfunc = (a, b) => {
+                        return a.price - b.price;
+                    };
+                    break;
+                case "price_desc": sortfunc = (a, b) => {
+                    return b.price - a.price;
+                };
+                    break;
+                case "author_asc": sortfunc = (a, b) => {
+                    return a.author < b.author ? -1 : 1;
+                };
+                    break;
+                case "author_desc": sortfunc = (a, b) => {
+                    return a.author > b.author ? -1 : 1;
+                };
+                    break;
+            }
+            products1.sort(sortfunc);
+            // kwdData.sort(sortfunc);
+            all();
+        })
+
+
+        //全部的
+        function all() {
+            let str = "";
+            products1.forEach(({ id, bookname, author, pages, price }) => {
+                str += `
+                        <tr>
+                        <td>${id}</td>
+                        <td>${bookname}</td>
+                        <td>${author}</td>
+                        <td>${pages}</td>
+                        <td>${price}</td>
+                        </tr>    
+                        `
+            });
+            document.querySelector("tbody").innerHTML = str;
+        }
+        all();
+
+
+
+        //搜尋的
+        const search = document.querySelector("#search");
+        const input = document.querySelector("#input");
+        search.addEventListener("click", () => {
+            // console.log('123');
+            // const usp2 = new URLSearchParams(location.search);
+            // const kwd = usp2.get("keyword");
+            // console.log(kwd);
+
+            const keyword = input.value;
+
+            console.log(keyword);
+            kwdData = products1.filter(({ bookname, author }) => {
+                return bookname.includes(keyword) || author.includes(keyword);
+            }).map(({ id, bookname, author, pages, price }) =>
+                `
+                <tr>
+                <td>${id}</td>
+                <td>${bookname}</td>
+                <td>${author}</td>
+                <td>${pages}</td>
+                <td>${price}</td>
+                </tr>
+                `
+            ).join("");
+            console.log(kwdData);
+            document.querySelector("tbody").innerHTML = kwdData;
+
+        })
