@@ -51,6 +51,9 @@
     <script src="data/products.js"></script>
     <script>
 
+
+
+        //篩選的
         const sort = document.querySelector("#sort");
         sort.addEventListener("click", (e) => {
             // console.log(e.target);
@@ -92,9 +95,10 @@
                         `
             });
             document.querySelector("tbody").innerHTML = str;
-
         })
 
+
+        //全部的
         function all() {
             let str = "";
             products1.forEach(({ id, bookname, author, pages, price }) => {
@@ -109,14 +113,26 @@
                         `
             });
             document.querySelector("tbody").innerHTML = str;
+        }
+        all();
 
 
-            const usp2 = new URLSearchParams(location.search);
-            const kwd = usp2.get("keyword");
 
-            if (!kwd) return
-            const kwdSort = products1.filter(({ bookname, author }) => {
-                return bookname.includes(kwd) || author.includes(kwd);
+        //搜尋的
+        const search = document.querySelector("#search");
+        const input = document.querySelector("#input");
+        search.addEventListener("click", () => {
+            // console.log('123');
+            // const usp2 = new URLSearchParams(location.search);
+            // const kwd = usp2.get("keyword");
+            // console.log(kwd);
+
+            const keyword = input.value;
+
+            console.log(keyword);
+            if (!keyword) return
+            const kwdData = products1.filter(({ bookname, author }) => {
+                return bookname.includes(keyword) || author.includes(keyword);
             }).map(({ id, bookname, author, pages, price }) =>
                 `
                 <tr>
@@ -128,27 +144,8 @@
                 </tr>
                 `
             ).join("");
-            document.querySelector("tbody").innerHTML = kwdSort;
-        }
-        all();
-
-
-
-
-        const search = document.querySelector("#search");
-        const input = document.querySelector("#input");
-        search.addEventListener("click", () => {
-            // console.log('123');
-            // const usp2 = new URLSearchParams(location.search);
-            // const kwd = usp2.get("keyword");
-            // console.log(kwd);
-
-            const keyword = input.value;
-            location.href = `?keyword=${keyword}`
-            console.log(keyword);
-
-
-
+            console.log(kwdData);
+            document.querySelector("tbody").innerHTML = kwdData;
 
         })
 
